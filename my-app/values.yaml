@@ -1,4 +1,4 @@
-replicaCount: 3
+replicaCount: 1
 
 image:
   repository: ghcr.io/julenhopp/k8s-custom-nginx
@@ -51,3 +51,7 @@ volumeMounts: []
 nodeSelector: {}
 tolerations: []
 affinity: {}
+
+persistence:
+  enabled: true
+  size: 500Mi
