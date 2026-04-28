@@ -45,9 +45,14 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
 
-volumes: []
-volumeMounts: []
+volumeMounts:
+  - name: san-block-data
+    mountPath: /usr/share/nginx/html/data
 
+volumes:
+  - name: san-block-data
+    persistentVolumeClaim:
+      claimName: my-gitops-app-my-app-pvc
 nodeSelector: {}
 tolerations: []
 affinity: {}
