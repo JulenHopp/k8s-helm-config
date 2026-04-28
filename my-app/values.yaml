@@ -1,9 +1,9 @@
-replicaCount: 1
+replicaCount: 3
 
 image:
   repository: ghcr.io/julenhopp/k8s-custom-nginx
   pullPolicy: IfNotPresent
-  tag: "latest"
+  tag: "6251580dabdb358493defe61603bdbf273d72659"
 
 imagePullSecrets: []
 nameOverride: ""
