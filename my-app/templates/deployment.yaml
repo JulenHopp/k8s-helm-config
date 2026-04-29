@@ -5,6 +5,8 @@ metadata:
   labels:
     {{- include "my-app.labels" . | nindent 4 }}
 spec:
+  strategy:
+    type: Recreate
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
@@ -56,11 +58,20 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
+          {{- if .Values.persistence.enabled }}
+          volumeMounts:
+            - name: san-block-data
+              mountPath: /usr/share/nginx/html/data
+          {{- else with .Values.volumeMounts }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.volumes }}
+      {{- if .Values.persistence.enabled }}
+      volumes:
+        - name: san-block-data
+          persistentVolumeClaim:
+            claimName: {{ include "my-app.fullname" . }}-pvc
+      {{- else with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
       {{- end }}
