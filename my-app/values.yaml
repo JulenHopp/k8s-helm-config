@@ -50,17 +50,13 @@ nodeSelector: {}
 tolerations: []
 affinity: {}
 
-{{- if .Values.persistence.enabled }}
           volumeMounts:
             - name: san-block-data
               mountPath: /usr/share/nginx/html/data
-          {{- end }}
-      {{- if .Values.persistence.enabled }}
       volumes:
         - name: san-block-data
           persistentVolumeClaim:
             claimName: {{ include "my-app.fullname" . }}-pvc
-      {{- end }}
 persistence:
   enabled: true
   size: 500Mi
